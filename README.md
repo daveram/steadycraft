@@ -72,7 +72,7 @@ For maximum nausea and motion sickness reduction, configure the following settin
 ## 📦 Installation
 
 ### 1-Click Install (Recommended)
-1. Download **`SteadyCraft.mcaddon`** from the [Releases](https://github.com/stevenshaw/steadycraft/releases) page.
+1. Download **`SteadyCraft.mcaddon`** from the [Releases](https://github.com/daveram/steadycraft/releases) page.
 2. Double-click or open the `.mcaddon` file with Minecraft.
 3. Minecraft will automatically import both the **Behavior Pack (BP)** and **Resource Pack (RP)**.
 4. When creating or editing a world:
