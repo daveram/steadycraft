@@ -32,9 +32,8 @@ jobs:
         with:
           name: SteadyCraft ${{ github.ref_name }}
           files: |
-            dist/SteadyCraft.mcaddon
-            dist/SteadyCraft_BP.mcpack
-            dist/SteadyCraft_RP.mcpack
+            dist/*.mcaddon
+            dist/*.mcpack
           draft: false
           prerelease: false
           generate_release_notes: true

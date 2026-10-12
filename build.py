@@ -138,9 +138,12 @@ def main():
         shutil.rmtree(dist_dir)
     os.makedirs(dist_dir, exist_ok=True)
 
-    bp_mcpack = os.path.join(dist_dir, "SteadyCraft_BP.mcpack")
-    rp_mcpack = os.path.join(dist_dir, "SteadyCraft_RP.mcpack")
-    addon_mcaddon = os.path.join(dist_dir, "SteadyCraft.mcaddon")
+    version_tuple = bp_manifest.get("header", {}).get("version", [0, 1, 0])
+    version_str = f"v{'.'.join(map(str, version_tuple))}"
+
+    bp_mcpack = os.path.join(dist_dir, f"SteadyCraft_BP_{version_str}.mcpack")
+    rp_mcpack = os.path.join(dist_dir, f"SteadyCraft_RP_{version_str}.mcpack")
+    addon_mcaddon = os.path.join(dist_dir, f"SteadyCraft_{version_str}.mcaddon")
 
     zip_directory_contents(bp_dir, bp_mcpack)
     bp_size, bp_hash = get_file_stats(bp_mcpack)

@@ -72,7 +72,7 @@ For maximum nausea and motion sickness reduction, configure the following settin
 ## 📦 Installation
 
 ### 1-Click Install (Recommended)
-1. Download **`SteadyCraft.mcaddon`** from the [Releases](https://github.com/daveram/steadycraft/releases) page.
+1. Download **`SteadyCraft_v<version>.mcaddon`** from the [Releases](https://github.com/daveram/steadycraft/releases) page.
 2. Double-click or open the `.mcaddon` file with Minecraft.
 3. Minecraft will automatically import both the **Behavior Pack (BP)** and **Resource Pack (RP)**.
 4. When creating or editing a world:
@@ -106,9 +106,9 @@ python3 build.py
 
 ### Build Artifacts
 Output packages will be generated inside the `dist/` directory:
-- `dist/SteadyCraft_BP.mcpack` — Behavior Pack archive.
-- `dist/SteadyCraft_RP.mcpack` — Resource Pack archive.
-- `dist/SteadyCraft.mcaddon` — Combined one-click bundle containing both packs.
+- `dist/SteadyCraft_BP_v<version>.mcpack` — Behavior Pack archive.
+- `dist/SteadyCraft_RP_v<version>.mcpack` — Resource Pack archive.
+- `dist/SteadyCraft_v<version>.mcaddon` — Combined one-click bundle containing both packs.
 
 ---
 
