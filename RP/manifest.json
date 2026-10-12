@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "SteadyCraft RP",
+    "description": "Motion comfort & visual stabilization resource pack for Minecraft Bedrock.",
+    "uuid": "7110d283-17d2-4390-bcec-22f514423430",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "description": "SteadyCraft Visual Stabilization Assets",
+      "type": "resources",
+      "uuid": "5021c796-3865-410d-b100-31d919f5d9c9",
+      "version": [1, 0, 0]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "namespace": "hud",
+  "steadycraft_reticle_anchor": {
+    "type": "image",
+    "texture": "textures/ui/reticle_anchor",
+    "size": [ 6, 6 ],
+    "layer": 30,
+    "anchor_from": "center",
+    "anchor_to": "center"
+  },
+  "steadycraft_vignette": {
+    "type": "image",
+    "texture": "textures/ui/vignette",
+    "size": [ "100%", "100%" ],
+    "layer": -1,
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "alpha": 0.45
+  },
+  "root_panel/root_panel_content": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "steadycraft_vignette@hud.steadycraft_vignette": {}
+          },
+          {
+            "steadycraft_reticle_anchor@hud.steadycraft_reticle_anchor": {}
+          }
+        ]
+      }
+    ]
+  }
+}
