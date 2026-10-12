@@ -11,48 +11,90 @@ const CAMERA_PRESETS = {
   center: "steadycraft:centered"
 };
 
-const DYNAMIC_PROPERTY_KEY = "steadycraft_cam_mode";
+const TAG_PREFIX = "steadycraft:mode_";
 
 /**
- * Retrieves the stored camera mode for a player.
+ * Retrieves the stored camera mode for a player using tags.
+ * Tags require zero schema registration and persist across deaths, dimensions, and saves.
  * Defaults to "right" (over-the-shoulder right) if unset.
  */
 function getPlayerCameraMode(player) {
   try {
-    const saved = player.getDynamicProperty(DYNAMIC_PROPERTY_KEY);
-    if (typeof saved === "string" && (CAMERA_PRESETS[saved] || saved === "off")) {
-      return saved;
+    const tags = player.getTags();
+    for (const tag of tags) {
+      if (tag.startsWith(TAG_PREFIX)) {
+        const mode = tag.replace(TAG_PREFIX, "");
+        if (CAMERA_PRESETS[mode] || mode === "off") {
+          return mode;
+        }
+      }
     }
   } catch (err) {
-    // Dynamic property access fallback
+    console.warn(`[SteadyCraft] Error reading tags: ${err}`);
   }
   return "right";
 }
 
 /**
- * Persists the preferred camera mode on the player entity.
+ * Persists the preferred camera mode on the player entity using tags.
  */
 function setPlayerCameraMode(player, mode) {
   try {
-    player.setDynamicProperty(DYNAMIC_PROPERTY_KEY, mode);
+    const tags = player.getTags();
+    for (const tag of tags) {
+      if (tag.startsWith(TAG_PREFIX)) {
+        player.removeTag(tag);
+      }
+    }
+    player.addTag(`${TAG_PREFIX}${mode}`);
   } catch (err) {
-    console.warn(`[SteadyCraft] Failed to save camera mode: ${err}`);
+    console.warn(`[SteadyCraft] Error saving tag: ${err}`);
   }
 }
 
 /**
  * Applies the requested camera preset or clears back to vanilla.
+ * Uses native player.camera API where available, with runCommandAsync fallback.
  */
 function applyCamera(player, mode) {
-  if (!player.isValid()) return;
+  if (!player || !player.isValid()) return;
 
   if (mode === "off" || mode === "clear") {
+    try {
+      if (player.camera && typeof player.camera.clear === "function") {
+        player.camera.clear();
+      }
+    } catch (_) {}
     player.runCommandAsync("camera @s clear").catch(() => {});
     return;
   }
 
   const preset = CAMERA_PRESETS[mode] || CAMERA_PRESETS.right;
-  player.runCommandAsync(`camera @s set ${preset}`).catch(() => {});
+  let applied = false;
+
+  try {
+    if (player.camera && typeof player.camera.setCamera === "function") {
+      player.camera.setCamera(preset);
+      applied = true;
+    }
+  } catch (_) {}
+
+  if (!applied) {
+    player.runCommandAsync(`camera @s set ${preset}`).catch((err) => {
+      console.warn(`[SteadyCraft] Failed to execute camera command: ${err}`);
+    });
+  }
+}
+
+/**
+ * Applies camera preference for a given player if enabled.
+ */
+function initPlayerCamera(player) {
+  if (!player || !player.isValid()) return;
+  const mode = getPlayerCameraMode(player);
+  if (mode !== "off") {
+    applyCamera(player, mode);
+  }
 }
 
 /**
@@ -63,15 +105,24 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   const player = event.player;
   if (!player) return;
 
-  // Small delay to ensure the player entity and camera API are fully initialized
+  // Small delay to ensure the player entity and camera systems are fully ready
   system.runTimeout(() => {
-    if (!player.isValid()) return;
-    const mode = getPlayerCameraMode(player);
-    if (mode !== "off") {
-      applyCamera(player, mode);
-    }
+    initPlayerCamera(player);
   }, 10);
 });
+
+// Also scan existing players on world load / script initialization
+system.runTimeout(() => {
+  for (const player of world.getAllPlayers()) {
+    initPlayerCamera(player);
+  }
+}, 20);
+
+system.runTimeout(() => {
+  for (const player of world.getAllPlayers()) {
+    initPlayerCamera(player);
+  }
+}, 60);
 
 /**
  * In-game command handler using Bedrock's native /scriptevent interface.

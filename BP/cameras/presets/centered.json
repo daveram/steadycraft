@@ -3,10 +3,9 @@
   "minecraft:camera_preset": {
     "identifier": "steadycraft:centered",
     "inherit_from": "minecraft:third_person",
-    "view_offset": [0.0, 0.35, -2.0],
+    "view_offset": [0.0, 0.35],
     "entity_offset": [0.0, 1.6, 0.0],
-    "player_effects": {
-      "play_effects": false
-    }
+    "radius": 2.0,
+    "player_effects": false
   }
 }
