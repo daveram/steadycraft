@@ -4,7 +4,7 @@
     "name": "SteadyCraft BP",
     "description": "Motion comfort & accessibility camera systems for Minecraft Bedrock.",
     "uuid": "295b5dba-9635-4b06-8c7c-1e93ec5caaa4",
-    "version": [1, 0, 0],
+    "version": [0, 1, 0],
     "min_engine_version": [1, 21, 0]
   },
   "modules": [
@@ -12,14 +12,14 @@
       "description": "SteadyCraft Camera Definitions",
       "type": "data",
       "uuid": "4542c008-99cc-4c2b-ab6b-78eee2ae0f35",
-      "version": [1, 0, 0]
+      "version": [0, 1, 0]
     },
     {
       "description": "SteadyCraft Camera Controller Scripts",
       "type": "script",
       "language": "javascript",
       "uuid": "06e8e996-d7a0-4406-b8f2-731acaab7589",
-      "version": [1, 0, 0],
+      "version": [0, 1, 0],
       "entry": "scripts/main.js"
     }
   ],
@@ -30,7 +30,7 @@
     },
     {
       "uuid": "7110d283-17d2-4390-bcec-22f514423430",
-      "version": [1, 0, 0]
+      "version": [0, 1, 0]
     }
   ]
 }
